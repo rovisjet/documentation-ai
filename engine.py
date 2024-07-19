@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -24,8 +25,9 @@ def github_webhook():
 
 def update_confluence(tag):
     # Confluence API URL and authentication
+    confluence_token = os.getenv('CONFLUENCE_API_TOKEN')
     confluence_url = 'https://your-confluence-instance/rest/api/content/{content_id}'
-    auth = ('reid@forcetherapeutics.com', 'ATATT3xFfGF0wnwW7UFHPyaLQv5eLYvbfP6lWZlLq36-nSlSejOg4-dEyUkzU-hkUZEeOAcnLCRHavhHQYooWTeRfKmhWDbVr9JQXLx393HqmCvh_Y4Gvpz9a_0oAWipfvpm4baDOdcM2YUZpJlgYdZmNxekfUxb4O5F3MfiiUSdwcXytEawegw=564413B0')
+    auth = ('reid@forcetherapeutics.com', confluence_token)
 
     # Fetch the existing content
     response = requests.get(confluence_url, auth=auth)
